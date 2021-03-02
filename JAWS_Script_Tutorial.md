@@ -46,7 +46,7 @@ JAWS自身もスクリプト機能を使って書かれています。このスクリプト機能は自分自身を変
 
 1. Windows+Mキーを押してデスクトップを表示します。
 2. Windows+Rキーを押して[ファイル名を指定して実行]のダイアログを表示します。
-3. JAWS14 のように、JAWSとバージョン番号を入力して、エンターキーを押します。
+3. JAWS2020 のように、JAWSとバージョン番号を入力して、エンターキーを押します。
 
 JAWSを終了するには、以下のように操作します。
 
@@ -243,7 +243,7 @@ JAWSスクリプトは、いわゆるテキストファイルです。メモ帳やその他のエディターでも編
 ```
 Script SayHello ()
 
-EndScript 
+EndScript
 ```
 
 ScriptとEndScriptの間に処理を書いていきます。それでは下の１行を書いてみましょう。
@@ -290,7 +290,7 @@ let sLine = sLine + GetWord()
 SpeechOn()
 SayString(sLine)
 PCCursor()
-EndScript 
+EndScript
 ```
 
 ### 変数を使う
@@ -393,15 +393,17 @@ SayString("Hello")
 * 元々存在していた初期スクリプトのAutoStartEvent()を呼び出して終了する。
 
 です。それでは一例を示します。
-
+```
 Function autostartevent()
 PerformScript SayLineAndColumn()
 AutoStartEvent()
 EndFunction
+```
 
 ### スクリプト内から別のスクリプトの実行
 
 スクリプト内から別のスクリプト（違うファイルに含まれているスクリプトでもよい）を実行することができます。関数の呼び出しでは関数名だけを書けばよかったのですが、スクリプト実行では
+
 ```
 performScript スクリプト名
 ```
@@ -434,25 +436,27 @@ JAWSHome()
 NextWord()
 let sLine = GetWord()
 if StringContainsChars (sLine, "行") then
-NextWord()
-let sLine = sLine + GetWord()
-SpeechOn()
-SayString(sLine)
-PCCursor()
+  NextWord()
+  let sLine = sLine + GetWord()
+  SpeechOn()
+  SayString(sLine)
+  PCCursor()
 Else
-SpeechOn()
-SayString("ステータスバーが表示されていません")
-PCCursor()
+  SpeechOn()
+  SayString("ステータスバーが表示されていません")
+  PCCursor()
 Endif
-EndScript 
+EndScript
 ```
+
+少し冗長な書き方ですね。もっと最適化の余地があるでしょう。
 
 ### 条件による処理の分岐
 
 プログラミング言語には条件により処理を分岐して実行する機能があります。プログラミング言語に限らず実生活でもこのような分岐は至る所で行っているはずです。「もしも、電車に乗るまでにちょっとあるならば、売店でお茶を買おう、そうでなければ急いで電車に乗る」は立派な条件分岐行動だと言えるでしょう。
 
 JAWSスクリプトでは下のように書きます。
-if (条件式) then 処理部分 elif (条件式) then 次の処理 else どれでもなかったときの処理 Endif 
+if (条件式) then 処理部分 elif (条件式) then 次の処理 else どれでもなかったときの処理 Endif
 
 ### 新しく使った関数
 
@@ -590,7 +594,7 @@ const
 true=1,
 false=0,
 ignore=-1,
-sMessage="Hello World" 
+sMessage="Hello World"
 ```
 
 定数を使った場合、下のようにSayString()を書くことができます。
@@ -624,7 +628,7 @@ Messages
 スクリプト開発はなかなか楽しい作業です。
 まだまだメッセージです。
 終わりましょう。
-@@EndMessages 
+@@EndMessages
 アットマークで始まり、続いて定数名（メッセージに付ける名前）を書きます。終了は、アットマークを二つ並べて書きます。上記例では一つだけメッセージを作りましたが、MessagesとEndMessagesの間にいくつでもメッセージを作る事ができます。同じメッセージを何度も使用する場合には一度このようにして纏めておくことはとても重要です。
 
 ### 別のスクリプトファイルのインクルード
@@ -675,7 +679,7 @@ SayString("自分のスクリプト")
 Else
 PerformScript Tab()
 Endif
-EndScript 
+EndScript
 
 ### 条件分岐
 
@@ -697,7 +701,7 @@ Endif
 
 特に条件式を書くときに、いくつかの条件を接続したり条件を反転させたりすることができます。また、演算子には優先順位があり、優先順位の高いものから先に評価されます。まず、優先順位を高い方から示します。
 
-1. 第1優先順位 
+1. 第1優先順位
 o ! : ではない
 o ( ) : 式を囲んで一つの式とする
 o == : 等しい
@@ -705,10 +709,10 @@ o < : より小さい
 o > : より大きい
 o != : 等しくない
 
-2. 第2優先順位 
+2. 第2優先順位
 o && : 両方が成り立つ
 
-3. 第3優先順位 
+3. 第3優先順位
 o || : どちらかが成り立つ
 
 式は上に上げた順番に従って評価、結合されます。例えば、
@@ -741,7 +745,7 @@ endwhile
 ```
 while (GetCharacter() != "z")
 NextCharacter()
-EndWhile 
+EndWhile
 ```
 
 となります。後者の場合は、
@@ -940,7 +944,7 @@ Else
 SpeechOn()
 SayString("ステータスバーが表示されていません")
 Endif
-EndScript 
+EndScript
 ```
 
 ### 各関数の働き
@@ -1016,7 +1020,7 @@ String sFocusIdString
 let sFocusIDString = GetControlIDString(FocusWindow)
 ;; ツイート入力欄に文字を書く度にこのイベントが呼ばれる。
 ;; そのたびに残り文字数を音声出力してしまうので、フォーカス移動がないと判断できるときは、すべての処理をスキップする。
-if sFocusIdString == "StatusText" 
+if sFocusIdString == "StatusText"
 && FocusWindow == PrevWindow then
 return 0
 Endif
@@ -1027,7 +1031,7 @@ SayObjectTypeAndText (0)
 return
 Endif
 ;; 発言入力欄に入ったときに発言入力欄であることを通知
-if sFocusIdString == "StatusText" 
+if sFocusIdString == "StatusText"
 && FocusWindow != PrevWindow then
 SayMessage(OT_CONTROL_NAME, csTweetInputArea)
 SayObjectTypeAndText (0)
@@ -1045,7 +1049,7 @@ JAWSは、ユーザの操作に応じて自動的に関数を呼び出すことがあります。前の章で記述し
 
 続いて行っているのがCtrl+Tabキーによる切り替えです。Tweenではいろいろな情報をこのキーで切り替えて読みますが、切り替え時にどの情報に切り替わったかを読み上げてくれないことがあります。どの情報に切り替わったかは、現在のフォーカスウィンドーの親ウィンドー名を参照して音声出力しています。
 
-最後に行っているのが、ツイート入力欄エリアにフォーカスが移ったときに、そのことを音声出力しています。現在のフォーカスがツイート入力エリアであり、現在のフォーカス位置と直前のフォーカス位置が違っているときに、フォーカスはツイート入力エリアに移動してきたのだと判断しています。
+最後に行っているのが、ツイート入力欄エリアにフォーカスが移ったとき??、そのことを音声出力しています。現在のフォーカスがツイート入力エリアであり、現在のフォーカス位置と直前のフォーカス位置が違っているときに、フォーカスはツイート入力エリアに移動してきたのだと判断しています。
 
 ### GetControlIdString()関数について
 
@@ -1112,5 +1116,3 @@ EndFunction
 
 
 48
-
-
